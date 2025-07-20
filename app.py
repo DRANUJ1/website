@@ -31,4 +31,5 @@ def watch(id, filename):
     return render_template("player.html", title=title, poster=poster, video_url=video_url)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
