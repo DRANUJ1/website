@@ -4,12 +4,19 @@ import requests
 
 app = Flask(__name__)
 
-@app.route("/watch/<id>/<filename>")
+@app.route("/watch/<id>/<path:filename>")
 def watch(id, filename):
-    print("DEBUG:", request.args)
+    from flask import request, abort, send_file
     file_id = request.args.get("hash")
+
     if not file_id:
         return abort(400, "Missing file_id (hash)")
+
+    print("DEBUG:", id, filename, file_id)
+
+    # yahan aap telegram file download logic ya redirect logic likh sakte ho
+    return f"Filename: {filename}, ID: {id}, File_ID: {file_id}"
+
 
     bot_token = os.environ.get("BOT_TOKEN")
     if not bot_token:
