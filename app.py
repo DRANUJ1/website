@@ -1,5 +1,8 @@
-from flask import Flask, request, abort, render_template_string
+from flask import Flask, request, jsonify
 from pymongo import MongoClient
+import requests
+from bs4 import BeautifulSoup
+import os  # ✅ This line was missing
 
 app = Flask(__name__)
 
