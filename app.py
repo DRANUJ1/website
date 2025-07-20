@@ -1,21 +1,18 @@
-from flask import Flask, request, abort, render_template_string, redirect
+from flask import Flask, request, abort, render_template_string
 from pymongo import MongoClient
-import os
 
 app = Flask(__name__)
 
 # MongoDB connection
-MONGO_URI = "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/?retryWrites=true&w=majority"
+MONGO_URI = "MONGO_URI = "mongodb+srv://nothingxhack:anujk24680@anujkumar.96pqsyb.mongodb.net/?retryWrites=true&w=majority"
+"
 client = MongoClient(MONGO_URI)
 db = client["techvjclonefilterbot"]
-collection = db["vjcollection"]  # Replace with your collection name
-
-# Telegram file link base URL (adjust as needed)
-TELEGRAM_FILE_URL = "https://api.telegram.org/file/bot<your_bot_token>/"
+collection = db["vjcollection"]
 
 @app.route("/")
 def home():
-    return "✅ Streaming Bot Working!"
+    return "✅ Streaming Bot Running!"
 
 @app.route("/watch/<int:file_id>/<path:filename>")
 def stream_video(file_id, filename):
@@ -27,16 +24,43 @@ def stream_video(file_id, filename):
     telegram_file_id = movie.get("file_id")
 
     if not telegram_file_id:
-        return abort(404, "File ID missing in database")
+        return abort(404, "File ID missing")
 
-    # Optional: direct Telegram download link
-    stream_link = f"https://telegram.me/your_bot_username?start=watch_{file_id}"
-
-    # Basic video player template
     html_template = f"""
     <!DOCTYPE html>
     <html>
     <head>
         <title>{filename}</title>
+        <style>
+            body {{
+                background-color: #000;
+                color: white;
+                text-align: center;
+                font-family: Arial, sans-serif;
+            }}
+            video {{
+                width: 90%;
+                margin-top: 20px;
+            }}
+            a {{
+                color: #0af;
+                text-decoration: none;
+                margin-top: 10px;
+                display: inline-block;
+            }}
+        </style>
     </head>
-    <body style="background-color:#000; color:white
+    <body>
+        <h3>{filename}</h3>
+        <video controls autoplay>
+            <source src="https://telegram-videostream.vercel.app/?file_id={telegram_file_id}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p><a href="https://t.me/TNJANUJBOT?start=watch_{file_id}" target="_blank">📥 Open in Telegram</a></p>
+    </body>
+    </html>
+    """
+    return render_template_string(html_template)
+
+if __name__ == "__main__":
+    app.run(debug=True)
