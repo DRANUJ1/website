@@ -7,8 +7,8 @@ app = Flask(__name__)
 # MongoDB connection
 MONGO_URI = "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(MONGO_URI)
-db = client["your_database"]
-collection = db["movies"]  # Replace with your collection name
+db = client["techvjclonefilterbot"]
+collection = db["vjcollection"]  # Replace with your collection name
 
 # Telegram file link base URL (adjust as needed)
 TELEGRAM_FILE_URL = "https://api.telegram.org/file/bot<your_bot_token>/"
