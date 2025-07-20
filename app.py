@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask import Flask, abort
 from pymongo import MongoClient
 import requests
 from bs4 import BeautifulSoup
