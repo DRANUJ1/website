@@ -62,4 +62,4 @@ def stream_video(file_id, filename):
     return render_template_string(html_template)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
